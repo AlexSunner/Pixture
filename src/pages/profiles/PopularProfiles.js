@@ -5,6 +5,12 @@ import Asset from "../../components/Asset";
 import { useProfileData } from "../../contexts/ProfileDataContext";
 import Profile from "./Profile";
 
+/**
+ * PopularProfiles component - Displays a list of the most followed profiles.
+ *
+ * @param {boolean} mobile - Determines if the component is rendered in mobile view.
+ * @returns {JSX.Element} The rendered PopularProfiles component.
+ */
 const PopularProfiles = ({ mobile }) => {
   const { popularProfiles } = useProfileData();
 

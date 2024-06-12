@@ -7,6 +7,15 @@ import Avatar from "../../components/Avatar";
 import { Button } from "react-bootstrap";
 import { useSetProfileData } from "../../contexts/ProfileDataContext";
 
+/**
+ * Profile component - Renders the profile details including avatar, owner name, and follow/unfollow buttons.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Object} props.profile - Profile data.
+ * @param {boolean} props.mobile - Flag to determine if the component is in mobile view.
+ * @param {number} [props.imageSize=55] - Size of the profile image.
+ * @returns {JSX.Element} The rendered Profile component.
+ */
 const Profile = (props) => {
   const { profile, mobile, imageSize = 55 } = props;
   const { id, following_id, image, owner } = profile;

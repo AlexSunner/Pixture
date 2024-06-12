@@ -18,6 +18,11 @@ import {
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
+/**
+ * ProfileEditForm component - Allows the user to edit their profile information.
+ *
+ * @returns {JSX.Element} The rendered ProfileEditForm component.
+ */
 const ProfileEditForm = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
@@ -33,7 +38,11 @@ const ProfileEditForm = () => {
   const { name, content, image } = profileData;
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
+  /**
+   * Fetches the profile data when the component mounts or when the user changes.
+   */
   useEffect(() => {
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
@@ -53,6 +62,11 @@ const ProfileEditForm = () => {
     handleMount();
   }, [currentUser, history, id]);
 
+  /**
+   * Handles changes to the form fields.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleChange = (event) => {
     setProfileData({
       ...profileData,
@@ -60,6 +74,11 @@ const ProfileEditForm = () => {
     });
   };
 
+  /**
+   * Handles the form submission to update the profile.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -76,13 +95,18 @@ const ProfileEditForm = () => {
         ...currentUser,
         profile_image: data.image,
       }));
-      history.goBack();
+      setSuccessMessage("Changes made correctly!"); // Set success message
+      setErrors({});
+      setTimeout(() => history.push(`/profiles/${id}`), 2000); // Redirect to profile page after 2 seconds
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);
     }
   };
 
+  /**
+   * JSX for the text fields in the form.
+   */
   const textFields = (
     <>
       <Form.Group>
@@ -118,6 +142,9 @@ const ProfileEditForm = () => {
       <Row>
         <Col className="py-2 p-0 p-md-2 text-center" md={7} lg={6}>
           <Container className={appStyles.Content}>
+            {successMessage && (
+              <Alert variant="success">{successMessage}</Alert>
+            )}
             <Form.Group>
               {image && (
                 <figure>

@@ -14,6 +14,11 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
+/**
+ * UserPasswordForm component - Allows a user to change their password.
+ *
+ * @returns {JSX.Element} The rendered UserPasswordForm component.
+ */
 const UserPasswordForm = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -26,7 +31,13 @@ const UserPasswordForm = () => {
   const { new_password1, new_password2 } = userData;
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // Add state for success message
 
+  /**
+   * Handles input change and updates userData state.
+   *
+   * @param {Event} event - The input change event.
+   */
   const handleChange = (event) => {
     setUserData({
       ...userData,
@@ -34,18 +45,27 @@ const UserPasswordForm = () => {
     });
   };
 
+  /**
+   * Redirects the user if they are not the owner of the profile.
+   */
   useEffect(() => {
     if (currentUser?.profile_id?.toString() !== id) {
-      // redirect user if they are not the owner of this profile
       history.push("/");
     }
   }, [currentUser, history, id]);
 
+  /**
+   * Handles form submission to change the password.
+   *
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await axiosRes.post("/dj-rest-auth/password/change/", userData);
-      history.goBack();
+      setSuccessMessage("Password changed successfully!"); // Set success message
+      setErrors({});
+      setTimeout(() => history.push(`/profiles/${id}`), 2000); // Redirect to profile page after 2 seconds
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);
@@ -56,6 +76,7 @@ const UserPasswordForm = () => {
     <Row>
       <Col className="py-2 mx-auto text-center" md={6}>
         <Container className={appStyles.Content}>
+          {successMessage && <Alert variant="success">{successMessage}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>New password</Form.Label>

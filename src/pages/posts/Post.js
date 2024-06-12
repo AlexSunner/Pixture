@@ -7,6 +7,12 @@ import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
 
+/**
+ * Post component - Renders an individual post with options to edit, delete, like, and comment.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @returns {JSX.Element} The rendered Post component.
+ */
 const Post = (props) => {
   const {
     id,
@@ -28,10 +34,16 @@ const Post = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  /**
+   * Handles the edit action by redirecting to the post edit page.
+   */
   const handleEdit = () => {
     history.push(`/posts/${id}/edit`);
   };
 
+  /**
+   * Handles the delete action by making a DELETE request to the API.
+   */
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/posts/${id}/`);
@@ -41,6 +53,9 @@ const Post = (props) => {
     }
   };
 
+  /**
+   * Handles the like action by making a POST request to the API.
+   */
   const handleLike = async () => {
     try {
       const { data } = await axiosRes.post("/likes/", { post: id });
@@ -57,6 +72,9 @@ const Post = (props) => {
     }
   };
 
+  /**
+   * Handles the unlike action by making a DELETE request to the API.
+   */
   const handleUnlike = async () => {
     try {
       await axiosRes.delete(`/likes/${like_id}/`);

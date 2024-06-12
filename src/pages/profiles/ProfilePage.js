@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-
 import Asset from "../../components/Asset";
-
 import styles from "../../styles/ProfilePage.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-
 import PopularProfiles from "./PopularProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { useParams } from "react-router";
@@ -24,20 +20,28 @@ import Post from "../posts/Post";
 import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
+import FollowersList from "../../components/FollowersList";
 
+/**
+ * ProfilePage component - Displays a user's profile including their posts, followers, and follow/unfollow buttons.
+ *
+ * @returns {JSX.Element} The rendered ProfilePage component.
+ */
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [profilePosts, setProfilePosts] = useState({ results: [] });
+  const [showFollowers, setShowFollowers] = useState(false);
 
   const currentUser = useCurrentUser();
   const { id } = useParams();
-
   const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
   const { pageProfile } = useProfileData();
-
   const [profile] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
 
+  /**
+   * Fetches the profile data and posts when the component mounts or when the profile ID changes.
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,6 +63,16 @@ function ProfilePage() {
     fetchData();
   }, [id, setProfileData]);
 
+  /**
+   * Toggles the visibility of the followers list.
+   */
+  const toggleFollowersList = () => {
+    setShowFollowers(!showFollowers);
+  };
+
+  /**
+   * JSX for the main profile section.
+   */
   const mainProfile = (
     <>
       {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
@@ -79,7 +93,15 @@ function ProfilePage() {
             </Col>
             <Col xs={3} className="my-2">
               <div>{profile?.followers_count}</div>
-              <div>followers</div>
+              <div>
+                followers
+                <Button
+                  className={`${btnStyles.Button} ${btnStyles.Black}`}
+                  onClick={toggleFollowersList}
+                >
+                  {showFollowers ? "Hide" : "Show"}
+                </Button>
+              </div>
             </Col>
             <Col xs={3} className="my-2">
               <div>{profile?.following_count}</div>
@@ -111,6 +133,9 @@ function ProfilePage() {
     </>
   );
 
+  /**
+   * JSX for the main profile posts section.
+   */
   const mainProfilePosts = (
     <>
       <hr />
@@ -143,6 +168,12 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               {mainProfile}
+              {showFollowers && (
+                <FollowersList
+                  userId={profile.id}
+                  onClose={toggleFollowersList}
+                />
+              )}
               {mainProfilePosts}
             </>
           ) : (

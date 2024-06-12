@@ -17,6 +17,11 @@ import appStyles from "../../App.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
 
+/**
+ * SignInForm component - Allows users to sign in to their account.
+ *
+ * @returns {JSX.Element} The rendered SignInForm component.
+ */
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   useRedirect("loggedIn");
@@ -30,6 +35,12 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
+
+  /**
+   * Handles form submission to sign in the user.
+   *
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -42,6 +53,11 @@ function SignInForm() {
     }
   };
 
+  /**
+   * Handles input change and updates signInData state.
+   *
+   * @param {Event} event - The input change event.
+   */
   const handleChange = (event) => {
     setSignInData({
       ...signInData,
@@ -113,7 +129,9 @@ function SignInForm() {
       >
         <Image
           className={`${appStyles.FillerImage}`}
-          src={"https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero.jpg"}
+          src={
+            "https://www.searchenginejournal.com/wp-content/uploads/2023/05/social-media-interaction-646b550019de8-sej.png"
+          }
         />
       </Col>
     </Row>

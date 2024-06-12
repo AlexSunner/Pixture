@@ -20,6 +20,11 @@ import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 
+/**
+ * PostCreateForm component - A form for creating a new post with a title, content, and image.
+ *
+ * @returns {JSX.Element} The rendered PostCreateForm component.
+ */
 function PostCreateForm() {
   useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
@@ -34,6 +39,11 @@ function PostCreateForm() {
   const imageInput = useRef(null);
   const history = useHistory();
 
+  /**
+   * Handles changes to text input fields (title and content).
+   *
+   * @param {Object} event - The event object.
+   */
   const handleChange = (event) => {
     setPostData({
       ...postData,
@@ -41,6 +51,11 @@ function PostCreateForm() {
     });
   };
 
+  /**
+   * Handles changes to the image input field.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
       URL.revokeObjectURL(image);
@@ -51,6 +66,11 @@ function PostCreateForm() {
     }
   };
 
+  /**
+   * Handles form submission to create a new post.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -63,13 +83,15 @@ function PostCreateForm() {
       const { data } = await axiosReq.post("/posts/", formData);
       history.push(`/posts/${data.id}`);
     } catch (err) {
-      console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }
     }
   };
 
+  /**
+   * Renders the text fields for title and content with associated error messages.
+   */
   const textFields = (
     <div className="text-center">
       <Form.Group>

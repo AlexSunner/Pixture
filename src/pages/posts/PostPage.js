@@ -17,6 +17,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
 
+/**
+ * PostPage component - A page to display a single post along with its comments.
+ *
+ * @returns {JSX.Element} The rendered PostPage component.
+ */
 function PostPage() {
   const { id } = useParams();
   const [post, setPost] = useState({ results: [] });
@@ -25,6 +30,9 @@ function PostPage() {
   const profile_image = currentUser?.profile_image;
   const [comments, setComments] = useState({ results: [] });
 
+  /**
+   * Fetches the post and its comments when the component mounts.
+   */
   useEffect(() => {
     const handleMount = async () => {
       try {

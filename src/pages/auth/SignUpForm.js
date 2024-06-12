@@ -17,6 +17,11 @@ import {
 import axios from "axios";
 import { useRedirect } from "../../hooks/useRedirect";
 
+/**
+ * SignUpForm component - Allows users to sign up for a new account.
+ *
+ * @returns {JSX.Element} The rendered SignUpForm component.
+ */
 const SignUpForm = () => {
   useRedirect("loggedIn");
   const [signUpData, setSignUpData] = useState({
@@ -30,6 +35,11 @@ const SignUpForm = () => {
 
   const history = useHistory();
 
+  /**
+   * Handles input change and updates signUpData state.
+   *
+   * @param {Event} event - The input change event.
+   */
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -37,6 +47,11 @@ const SignUpForm = () => {
     });
   };
 
+  /**
+   * Handles form submission to sign up the user.
+   *
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -131,7 +146,9 @@ const SignUpForm = () => {
       >
         <Image
           className={`${appStyles.FillerImage}`}
-          src={"https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero2.jpg"}
+          src={
+            "https://www.forbes.com/advisor/wp-content/uploads/2023/05/Social_Media_Statistics_-_article_image.jpg"
+          }
         />
       </Col>
     </Row>

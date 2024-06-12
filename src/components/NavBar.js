@@ -11,12 +11,19 @@ import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
+/**
+ * NavBar component - Renders the navigation bar of the application.
+ *
+ * @returns {JSX.Element} The rendered NavBar component.
+ */
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
+  /**
+   * Handles user sign out by sending a logout request to the API.
+   */
   const handleSignOut = async () => {
     try {
       await axios.post("dj-rest-auth/logout/");
@@ -26,6 +33,9 @@ const NavBar = () => {
     }
   };
 
+  /**
+   * JSX for adding a post icon in the navigation bar.
+   */
   const addPostIcon = (
     <NavLink
       className={styles.NavLink}
@@ -35,6 +45,10 @@ const NavBar = () => {
       <i className="far fa-plus-square"></i>Add post
     </NavLink>
   );
+
+  /**
+   * JSX for the icons to be displayed when the user is logged in.
+   */
   const loggedInIcons = (
     <>
       <NavLink
@@ -62,6 +76,10 @@ const NavBar = () => {
       </NavLink>
     </>
   );
+
+  /**
+   * JSX for the icons to be displayed when the user is logged out.
+   */
   const loggedOutIcons = (
     <>
       <NavLink

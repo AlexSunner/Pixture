@@ -15,6 +15,11 @@ import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
+/**
+ * PostEditForm component - A form for editing an existing post with a title, content, and image.
+ *
+ * @returns {JSX.Element} The rendered PostEditForm component.
+ */
 function PostEditForm() {
   const [errors, setErrors] = useState({});
 
@@ -29,6 +34,9 @@ function PostEditForm() {
   const history = useHistory();
   const { id } = useParams();
 
+  /**
+   * Fetches the post data on component mount and sets the form fields.
+   */
   useEffect(() => {
     const handleMount = async () => {
       try {
@@ -44,6 +52,11 @@ function PostEditForm() {
     handleMount();
   }, [history, id]);
 
+  /**
+   * Handles changes to text input fields (title and content).
+   *
+   * @param {Object} event - The event object.
+   */
   const handleChange = (event) => {
     setPostData({
       ...postData,
@@ -51,6 +64,11 @@ function PostEditForm() {
     });
   };
 
+  /**
+   * Handles changes to the image input field.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
       URL.revokeObjectURL(image);
@@ -61,6 +79,11 @@ function PostEditForm() {
     }
   };
 
+  /**
+   * Handles form submission to update the post.
+   *
+   * @param {Object} event - The event object.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -76,13 +99,15 @@ function PostEditForm() {
       await axiosReq.put(`/posts/${id}/`, formData);
       history.push(`/posts/${id}`);
     } catch (err) {
-      console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }
     }
   };
 
+  /**
+   * Renders the text fields for title and content with associated error messages.
+   */
   const textFields = (
     <div className="text-center">
       <Form.Group>

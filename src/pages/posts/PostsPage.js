@@ -18,6 +18,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 
+/**
+ * PostsPage component - A page to display a list of posts with search functionality.
+ *
+ * @param {string} message - Message to display when no posts are found.
+ * @param {string} filter - Filter to apply to the posts query.
+ * @returns {JSX.Element} The rendered PostsPage component.
+ */
 function PostsPage({ message, filter = "" }) {
   const [posts, setPosts] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -25,6 +32,9 @@ function PostsPage({ message, filter = "" }) {
 
   const [query, setQuery] = useState("");
 
+  /**
+   * Fetches the posts based on the filter and query whenever they change.
+   */
   useEffect(() => {
     const fetchPosts = async () => {
       try {

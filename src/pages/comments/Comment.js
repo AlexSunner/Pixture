@@ -9,6 +9,12 @@ import styles from "../../styles/Comment.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { axiosRes } from "../../api/axiosDefaults";
 
+/**
+ * Comment component - Renders a single comment with options to edit or delete if owned by the current user.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @returns {JSX.Element} The rendered Comment component.
+ */
 const Comment = (props) => {
   const {
     profile_id,
@@ -25,6 +31,9 @@ const Comment = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
+  /**
+   * Handles the deletion of a comment.
+   */
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/comments/${id}/`);
@@ -41,7 +50,9 @@ const Comment = (props) => {
         ...prevComments,
         results: prevComments.results.filter((comment) => comment.id !== id),
       }));
-    } catch (err) {}
+    } catch (err) {
+      // Handle error
+    }
   };
 
   return (
