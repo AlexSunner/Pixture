@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Modal, ListGroup } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import ListGroup from "react-bootstrap/ListGroup";
 
 /**
  * FollowersList component - Displays a list of followers for a given user.

@@ -63,7 +63,7 @@ const UsernameForm = () => {
       setErrors({});
       setTimeout(() => history.push(`/profiles/${id}`), 2000); // Redirect to profile page after 2 seconds
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setErrors(err.response?.data);
     }
   };
