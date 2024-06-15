@@ -10,8 +10,8 @@ Define the API handlers in `mocks/handlers.js`
 
 Configure the MSW server in `setupTests.js`
 
-Explanation of Tests
-renders NavBar
+### Explanation of Tests
+
 
 Description: Ensures the NavBar component renders correctly for a logged-out user.
 Assertions: Verifies the presence of the "Sign in" link.
@@ -23,6 +23,9 @@ renders Sign in and Sign up buttons again on log out
 
 Description: Ensures the NavBar updates correctly when a user logs out.
 Assertions: Simulates a click on the "Sign out" link and verifies the presence of both "Sign in" and "Sign up" links, confirming the user has logged out.
+
+
+
 
 ### Running the Tests
 
