@@ -2,6 +2,37 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CurrentUserProvider } from "../../contexts/CurrentUserContext";
 import NavBar from "../NavBar";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
+
+// Mock server setup
+const baseURL = "https://pixture-drf-2d68c7f0119f.herokuapp.com/";
+
+const handlers = [
+  rest.get(`${baseURL}dj-rest-auth/user/`, (req, res, ctx) => {
+    return res(
+      ctx.json({
+        pk: 1,
+        username: "Sune",
+        email: "",
+        first_name: "",
+        last_name: "",
+        profile_id: 1,
+        profile_image:
+          "https://res.cloudinary.com/duceis9ql/image/upload/v1/media/images/cv-image4_b6pimb",
+      })
+    );
+  }),
+  rest.post(`${baseURL}dj-rest-auth/logout/`, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
+];
+
+const server = setupServer(...handlers);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("renders NavBar", () => {
   render(
@@ -10,7 +41,6 @@ test("renders NavBar", () => {
     </Router>
   );
 
-  // screen.debug();
   const signInLink = screen.getByRole("link", { name: "Sign in" });
   expect(signInLink).toBeInTheDocument();
 });
@@ -24,7 +54,8 @@ test("renders link to the user profile for a logged in user", async () => {
     </Router>
   );
 
-  const profileAvatar = await screen.findByText("Profile");
+  // This should find the username "Sune" text inside the Avatar component.
+  const profileAvatar = await screen.findByText("Sune");
   expect(profileAvatar).toBeInTheDocument();
 });
 
