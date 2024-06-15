@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -13,6 +13,7 @@ import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 import { removeTokenTimestamp } from "../utils/utils";
+import Alert from "react-bootstrap/Alert";
 
 /**
  * NavBar component - Renders the navigation bar of the application.
@@ -23,6 +24,7 @@ const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   /**
    * Handles user sign out by sending a logout request to the API.
@@ -32,6 +34,8 @@ const NavBar = () => {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       removeTokenTimestamp();
+      setSuccessMessage("You have successfully signed out!"); // Set success message
+      setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
     } catch (err) {
       // console.log(err);
     }
@@ -141,6 +145,11 @@ const NavBar = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {successMessage && (
+        <Alert variant="success" className="mt-3">
+          {successMessage}
+        </Alert>
+      )}
     </Navbar>
   );
 };

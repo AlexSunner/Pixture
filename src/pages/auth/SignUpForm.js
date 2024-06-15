@@ -32,6 +32,7 @@ const SignUpForm = () => {
   const { username, password1, password2 } = signUpData;
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const history = useHistory();
 
@@ -56,7 +57,9 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       await axios.post("/dj-rest-auth/registration/", signUpData);
-      history.push("/signin");
+      setSuccessMessage("You have successfully signed up!"); // Set success message
+      setErrors({});
+      setTimeout(() => history.push("/signin"), 2000); // Redirect to sign-in page after 2 seconds
     } catch (err) {
       setErrors(err.response?.data);
     }
@@ -132,6 +135,11 @@ const SignUpForm = () => {
               </Alert>
             ))}
           </Form>
+          {successMessage && (
+            <Alert variant="success" className="mt-3">
+              {successMessage}
+            </Alert>
+          )}
         </Container>
 
         <Container className={`mt-3 ${appStyles.Content}`}>

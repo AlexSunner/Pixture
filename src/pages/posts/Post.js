@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Card,
+  Media,
+  OverlayTrigger,
+  Tooltip,
+  Modal,
+  Button,
+} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
@@ -34,6 +41,8 @@ const Post = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+
   /**
    * Handles the edit action by redirecting to the post edit page.
    */
@@ -47,6 +56,7 @@ const Post = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/posts/${id}/`);
+      setShowModal(false); // Hide the modal after deletion
       history.goBack();
     } catch (err) {
       // console.log(err);
@@ -91,6 +101,20 @@ const Post = (props) => {
     }
   };
 
+  /**
+   * Handles showing the delete confirmation modal.
+   */
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  /**
+   * Handles hiding the delete confirmation modal.
+   */
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <Card className={styles.Post}>
       <Card.Body>
@@ -104,7 +128,7 @@ const Post = (props) => {
             {is_owner && postPage && (
               <MoreDropdown
                 handleEdit={handleEdit}
-                handleDelete={handleDelete}
+                handleDelete={handleShowModal} // Show modal on delete
               />
             )}
           </div>
@@ -147,6 +171,21 @@ const Post = (props) => {
           {comments_count}
         </div>
       </Card.Body>
+      {/* Modal for delete confirmation */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you really want to delete this post?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            No
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Card>
   );
 };

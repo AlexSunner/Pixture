@@ -34,6 +34,7 @@ function SignInForm() {
   const { username, password } = signInData;
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const history = useHistory();
 
@@ -49,7 +50,9 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
-      history.goBack();
+      setSuccessMessage("You have successfully signed in!"); // Set success message
+      setErrors({});
+      setTimeout(() => history.push("/"), 2000); // Redirect to home page after 2 seconds
     } catch (err) {
       setErrors(err.response?.data);
     }
@@ -118,6 +121,11 @@ function SignInForm() {
               </Alert>
             ))}
           </Form>
+          {successMessage && (
+            <Alert variant="success" className="mt-3">
+              {successMessage}
+            </Alert>
+          )}
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
           <Link className={styles.Link} to="/signup">

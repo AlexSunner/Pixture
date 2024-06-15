@@ -28,6 +28,7 @@ import { useRedirect } from "../../hooks/useRedirect";
 function PostCreateForm() {
   useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const [postData, setPostData] = useState({
     title: "",
@@ -81,7 +82,8 @@ function PostCreateForm() {
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
-      history.push(`/posts/${data.id}`);
+      setSuccessMessage("Post created successfully!"); // Set success message
+      setTimeout(() => history.push(`/posts/${data.id}`), 2000); // Redirect to post page after 2 seconds
     } catch (err) {
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
@@ -191,6 +193,11 @@ function PostCreateForm() {
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
+      {successMessage && (
+        <Alert variant="success" className="mt-3">
+          {successMessage}
+        </Alert>
+      )}
     </Form>
   );
 }
