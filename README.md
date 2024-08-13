@@ -18,6 +18,7 @@ This will allow you to sign in and use Pixture without any issues.
 
 ## Table of Contents
 
+- Design Process
 - Features
 - Installation
 - Usage
@@ -28,6 +29,21 @@ This will allow you to sign in and use Pixture without any issues.
 - Forking & Cloning
 - Testings
 - Credits
+
+## Design Process Documentation
+
+### 1. Project Overview
+
+The goal of this project is to create a social media application where users can create posts, follow other users, and interact with content. The primary objective of the design was to create an intuitive and visually appealing interface that enhances user engagement and facilitates straightforward navigation.
+
+### 2. Research and Inspiration
+
+To inform the design, I conducted a review of similar social media platforms and gathered user feedback on desired features. Users preferred a clean layout with easily accessible features. This insight guided my design approach to ensure the application meets user expectations and stands out from competitors.
+
+### 3. Wireframes
+
+Here are wireframes I created for the Homepage, the create a post page and profile page.
+
 
 ## Features
 
@@ -184,50 +200,208 @@ Cloning your repository will allow you to download a local version of the reposi
 
 - Contributions are welcome! Please fork the repository and submit a pull request with your changes. Make sure to follow the project's coding style and include appropriate documentation.
 
-## Manual Testings
+## Manual Testing
 
-- Homepage
+### Homepage
 
-  - Manually verified that the homepage loads correctly without any errors.
-  - Ensured that the posts are displayed on the homepage as expected.
-  - Clicked on different posts to ensure they open correctly and displays the content accurately.
+- **Step 1**: Open the browser and navigate to the homepage.
+  - **Expected Result**: The homepage should load without any errors. The layout should be displayed as intended, with no broken elements or missing content.
+- **Step 2**: Verify that all posts are displayed on the homepage, including titles, images, and content.
+  - **Expected Result**: All posts should be visible, and clicking on a post should open it in a new page.
+- **Step 3**: Click on different posts to ensure they open correctly and display the content accurately.
+  - **Expected Result**: The selected post should open without errors, displaying the full content including text, images, and other media.
 
-- User Authentication
+### User Authentication
 
-  - Manually tested the user authentication functionality by attempting to log in with valid credentials.
-  - Verified that the login form validates user input and displays appropriate error messages for incorrect credentials.
-  - After successful login, verified that the user is redirected to the homepage.
-  - Manually tested the logout functionality by clicking on the logout button and verifying that the user is logged out of the website.
+- **Login with Valid Credentials**:
+  - **Step 1**: Navigate to the login page.
+  - **Step 2**: Enter valid credentials (e.g., `testuser` and `password123`) and click "Login."
+    - **Expected Result**: The user should be redirected to the homepage, and a success message should be displayed.
+- **Login with Invalid Credentials**:
+  - **Step 1**: Enter incorrect credentials (e.g., `testuser` and `wrongpassword`).
+    - **Expected Result**: An error message should appear, indicating incorrect login details.
+- **Logout Functionality**:
+  - **Step 1**: After logging in, click the "Logout" button in the navigation bar.
+    - **Expected Result**: The user should be logged out, redirected to the homepage, and see the "Login" option in the navigation bar.
 
-- User Registration
+### User Registration
 
-  - Manually tested the user registration functionality by attempting to register a new account.
-  - Filled out the registration form with valid user details and verified that the form submits successfully.
-  - Checked for validation errors when providing invalid or incomplete information.
-  - After successful registration, attempted to log in using the newly created account to ensure it works as expected.
+- **Step 1**: Navigate to the registration page.
+- **Step 2**: Fill out the registration form with valid details and submit.
+  - **Expected Result**: The form should submit successfully, and a confirmation message should be displayed.
+- **Step 3**: Log in using the newly created account.
+  - **Expected Result**: The login should be successful, and the user should be redirected to the homepage.
+- **Invalid Registration**:
+  - **Step 1**: Try to submit the form with incomplete or invalid data.
+    - **Expected Result**: The form should display appropriate error messages and prevent submission.
 
-- Commenting and Liking on Posts
+### Commenting and Liking on Posts
 
-  - Manually navigated to individual posts and verified that users can leave comments.
-  - Tested the comment submission form by entering valid comment text and ensuring it is posted successfully.
-  - Checked for validation errors when attempting to submit empty comments.
-  - Verified that comments are displayed correctly under the respective posts.
-  - Verified that the `comment count` was increased by 1 when submitting a comment.
-  - Verified that the `Likes count` was increased by 1 when pressing the like button, and decreased by 1 when pressing it again.
+- **Commenting**:
+  - **Step 1**: Navigate to a specific post and scroll down to the comment section.
+  - **Step 2**: Enter a valid comment and click "Submit."
+    - **Expected Result**: The comment should be posted successfully, and the comment count should increase by 1.
+  - **Invalid Comment**:
+    - **Step 1**: Try to submit an empty comment.
+      - **Expected Result**: The system should prevent submission, not letting the post button be clickable.
+- **Liking**:
+  - **Step 1**: Click the "Like" button on a post.
+    - **Expected Result**: The like count should increase by 1.
+  - **Step 2**: Click the "Like" button again.
+    - **Expected Result**: The like count should decrease by 1.
 
-- Responsive Design
+### Creating a Post as a Logged-In User
 
-  - Manually tested the responsiveness of the application by accessing it from different devices and screen sizes.
-  - Verified that the layout and content adapt properly to different screen resolutions, including desktop, tablets and mobile devices.
+#### Creating a New Post
 
-- Navigation Bar
+- **Step 1**: Log in to your account and navigate to the "+" icon that says Add Post.
+- **Step 2**: Enter the post title and content.
+- **Step 3**: Upload an image.
+- **Step 4**: Click the "Create" button to submit the post.
+  - **Expected Result**: The post should be created successfully, and a confirmation message (e.g., "Post created successfully") should be displayed.
+- **Step 5**: Navigate to the homepage or your profile page to verify that the post is visible and correctly formatted.
+  - **Expected Result**: The post should appear in the appropriate section, with the correct image, title and content displayed.
 
-  - Manually tested the navigation links to ensure they lead to the correct pages.
-  - Checked that the navigation menu is accessible and user-friendly on both desktop and mobile devices.
+#### Invalid Post Creation
 
-- Admin Panel
-  - Manually accessed the Django Admin Panel and verified that administrators can add, edit and delete categories, posts, users, collaboration requests, and contact page content.
-  - Manually tested the functionality of different admin panel features.
+- **Step 1**: Try to submit the post without filling in all required fields (e.g., leave the title or content empty).
+  - **Expected Result**: The system should prevent the submission and display an error message indicating the missing fields.
+- **Step 2**: Attempt to upload an unsupported media file or exceed the size limit.
+  - **Expected Result**: The system should display an error message indicating the issue with the media file.
+
+### Editing and Deleting a Post as a Logged-In User
+
+#### Editing a Post
+
+- **Step 1**: Navigate to the post you just created and locate the "Edit" button.
+- **Step 2**: Click "Edit" to open the post in edit mode.
+- **Step 3**: Modify the post content, title, or image.
+- **Step 4**: Click "Save" to submit the changes.
+  - **Expected Result**: The post should be updated successfully.
+- **Step 5**: Refresh the post page to ensure the changes persist after a page reload.
+  - **Expected Result**: The post should display the updated content, title, and any other modifications.
+
+#### Invalid Post Edit
+
+- **Step 1**: Attempt to edit the post by removing required content (e.g., delete the title or content).
+  - **Expected Result**: The system should prevent the submission and display an error message indicating the missing fields.
+
+#### Deleting a Post
+
+- **Step 1**: Navigate to the post you want to delete and locate the "Delete" button.
+- **Step 2**: Click "Delete" and confirm the deletion in the subsequent modal.
+  - **Expected Result**: The post should be deleted successfully.
+- **Step 3**: Navigate to the homepage or your profile page to ensure the post is no longer visible.
+  - **Expected Result**: The post should be completely removed from the site, and no traces of it should remain.
+
+### Following and Unfollowing Other Profiles
+
+#### Following a Profile
+
+- **Step 1**: Log in to your account and navigate to another user's profile page.
+- **Step 2**: Locate the "Follow" button on their profile page.
+- **Step 3**: Click the "Follow" button.
+  - **Expected Result**: The "Follow" button should change to "Unfollow,". The followers count for the profile should increase by 1.
+- **Step 4**: Click the "Show" button and verify that your username appears in the "Followers" list.
+  - **Expected Result**: Your username should be listed under the "Followers" section.
+- **Step 5**: Log out and log back in to ensure that the following status persists after a session ends.
+  - **Expected Result**: The user should still be followed, and their profile should still display the "Unfollow" button.
+
+#### Unfollowing a Profile
+
+- **Step 1**: Navigate to the profile of a user you are currently following.
+- **Step 2**: Locate the "Unfollow" button on their profile page.
+- **Step 3**: Click the "Unfollow" button.
+  - **Expected Result**: The "Unfollow" button should change back to "Follow,". The follower count for the profile should decrease by 1.
+- **Step 4**: Click the "Show" button and verify that your username no longer appears in their "Followers" list.
+  - **Expected Result**: The user should be removed from the "Following" section of your profile.
+- **Step 5**: Log out and log back in to ensure that the unfollow status persists after a session ends.
+  - **Expected Result**: The user should no longer be followed, and their profile should display the "Follow" button.
+
+### Responsive Design
+
+- **Desktop Testing**:
+  - **Step 1**: Open the application on a desktop browser and resize the window to various widths.
+    - **Expected Result**: The layout should adjust smoothly without any content overlapping or breaking.
+- **Tablet and Mobile Testing**:
+  - **Step 1**: Access the application on a tablet and mobile device.
+    - **Expected Result**: The layout should be responsive, with elements such as the navigation bar adapting to the screen size (collapsing into a hamburger menu on mobile).
+  - **Step 2**: Test touch interactions like clicking buttons and scrolling.
+    - **Expected Result**: The app should be fully functional on all device types.
+
+### Navigation Bar
+
+- **Desktop Navigation**:
+  - **Step 1**: Click each link in the navigation bar to ensure it redirects to the correct page (e.g., "Home," "Feed," "Liked").
+    - **Expected Result**: Each link should work correctly, with no broken links or incorrect redirects.
+- **Mobile Navigation**:
+  - **Step 1**: Open the application on a mobile device and test the navigation bar functionality (expanding/collapsing the hamburger menu).
+    - **Expected Result**: The navigation should be user-friendly, with all links accessible and functional on mobile.
+
+### Admin Panel
+
+- **Accessing the Admin Panel**:
+  - **Step 1**: Log in as an admin and navigate to the admin panel.
+    - **Expected Result**: The admin dashboard should be accessible, displaying all administrative options.
+- **CRUD Operations**:
+  - **Step 1**: Test creating, editing, and deleting posts, users, and other content types.
+    - **Expected Result**: Each action should work as expected, with changes reflected immediately in the application.
+- **Edge Cases**:
+  - **Step 1**: Attempt to delete a user that is associated with multiple posts.
+    - **Expected Result**: The system should handle the deletion appropriately, deleting everything associated with that specific user.
+
+### Profile Page
+
+#### Editing Bio
+
+- **Step 1**: Log in and navigate to your profile page.
+- **Step 2**: Click the "Edit" button.
+- **Step 3**: Click the "edit profile" button.
+- **Step 4**: Enter a new bio text (e.g., "This is my updated bio.") and click "Save."
+  - **Expected Result**: The bio should be updated with the new text, and a confirmation message (e.g., "Bio updated successfully") should be displayed.
+- **Step 5**: Refresh the profile page to ensure the bio persists after a page reload.
+  - **Expected Result**: The new bio should still be displayed after the page reloads.
+
+#### Changing Username
+
+- **Step 1**: Log in and navigate to your profile page.
+- **Step 2**: Click the "Edit" button.
+- **Step 3**: Click the "change username" button.
+- **Step 4**: Enter a new username (e.g., `newusername123`) and click "Save."
+  - **Expected Result**: The username should be updated, and a confirmation message (e.g., "Username updated successfully") should be displayed.
+- **Step 5**: Log out and log back in using the new username.
+  - **Expected Result**: You should be able to log in with the new username, and the profile page should reflect the updated username.
+
+#### Changing Password
+
+- **Step 1**: Log in and navigate to your profile page.
+- **Step 2**: Click the "Edit" button.
+- **Step 3**: Click the "change password" button.
+- **Step 4**: Enter a new password, confirm the new password and click "Save".
+  - **Expected Result**: The password should be updated successfully, and a confirmation message (e.g., "Password updated successfully") should be displayed.
+- **Step 5**: Log out and attempt to log back in using the new password.
+  - **Expected Result**: You should be able to log in with the new password, and the login process should work as expected.
+- **Invalid Password Change**:
+  - **Step 1**: Try to enter a new password that doesn’t meet the required criteria (e.g., too short or missing special characters).
+    - **Expected Result**: The system should display an error message indicating the password requirements.
+  - **Step 2**: Attempt to confirm the new password with a mismatched confirmation field.
+    - **Expected Result**: An error message should be displayed, indicating that the passwords do not match.
+
+#### Adding a Profile Picture
+
+- **Step 1**: Navigate to the "Profile Picture" section on the profile page.
+- **Step 2**: Click the "Upload" button and select an image file from your computer.
+- **Step 3**: After selecting the image, click "Save" to upload the profile picture.
+  - **Expected Result**: The profile picture should be uploaded and displayed in the profile picture section, with a confirmation message (e.g., "Profile picture updated successfully").
+- **Step 4**: Refresh the profile page to ensure the profile picture persists after a page reload.
+  - **Expected Result**: The new profile picture should still be displayed after the page reloads.
+- **Invalid Profile Picture Upload**:
+  - **Step 1**: Try to upload an unsupported file type (e.g., a text file) or an image that exceeds the allowed size limit.
+    - **Expected Result**: The system should prevent the upload and display an error message indicating the issue.
+
+### Summary
+
+All tests have been conducted successfully, and all functionalities have passed as expected.
 
 ### This section provides a guide for setting up and performing manual testing using MSW (Mock Service Worker) and Jest. The focus is on the NavBar component, ensuring it behaves correctly under different user states.
 
