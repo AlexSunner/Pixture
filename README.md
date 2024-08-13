@@ -44,6 +44,11 @@ To inform the design, I conducted a review of similar social media platforms and
 
 Here are wireframes I created for the Homepage, the create a post page and profile page.
 
+![Homepage Wireframe](https://github.com/AlexSunner/pixture/blob/main/src/assets/readme_images/wireframe.jpg?raw=true)
+
+![Profile Page](https://github.com/AlexSunner/pixture/blob/main/src/assets/readme_images/wireframeprofile.jpg?raw=true)
+
+![Create a post](https://github.com/AlexSunner/pixture/blob/main/src/assets/readme_images/wireframepost.jpg?raw=true)
 
 ## Features
 
